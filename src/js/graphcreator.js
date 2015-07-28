@@ -185,10 +185,18 @@ window.Widget = (function () {
 
         var chart_tab = this.layout.createTab({name: "1. Chart", closable: false});
         var data_tab = this.layout.createTab({name: "2. Data", closable: false});
-        var mashup_tab = this.layout.createTab({name: "3. Mashup", closable: false});
+        var mashup_tab = this.layout.createTab({name: "3. Dashboard", closable: false});
 
-        var createButton = new StyledElements.StyledButton({text: 'Create mashup', class: 'btn-primary'});
-        createButton.insertInto(mashup_tab);
+        var mashup_panel = document.createElement('div');
+        mashup_panel.className = "mashup_panel";
+        var temp_p = document.createElement('p');
+        temp_p.appendChild(document.createTextNode("If you are finished you can create a new dashboard."));
+        mashup_panel.appendChild(temp_p);
+
+        var createButton = new StyledElements.StyledButton({text: 'Create dashboard', class: 'btn-primary'});
+        createButton.insertInto(mashup_panel);
+
+        mashup_tab.appendChild(mashup_panel);
 
         createButton.addEventListener("click", function () {
             createWorkspace.call(this);

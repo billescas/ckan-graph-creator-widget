@@ -37,3 +37,9 @@
   -ms-filter: grayscale(100%);
   filter: grayscale(100%);
 }
+
+.mashup_panel{
+  margin-top: 20px;
+  text-align: center;
+}
+
