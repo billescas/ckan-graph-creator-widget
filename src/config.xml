@@ -10,11 +10,17 @@
     <doc>doc/index.md</doc>
     <changelog>doc/changelog.md</changelog>
   </details>
+  <preferences>
+    <preference name="ckan_server" type="text" description="URL of the CKAN server" label="CKAN Server" default="http://localhost:5000"/>
+  </preferences>
   <wiring>
     <outputendpoint name="flotr2-graph-config" type="text" label="Flotr2 Configuration" description="The configuration of your flotr2 graph" friendcode="flotr2-graph-data" />
     <outputendpoint name="googlecharts-graph-config" type="text" label="Google Charts Configuration" description="The configuration of your Google Charts graph" friendcode="google-charts-data" />
     <inputendpoint name="dataset" type="text" label="Data and Structure" description="A JSON with two fields: structure (for the structure of the data) and data (the data ifself)" actionlabel="Data and Structure" friendcode="dataset"/>
   </wiring>
+  <requirements>
+     <feature name="DashboardManagement"/>
+  </requirements>
   <contents src="index.html" cacheable="false" useplatformstyle="true"/>
   <rendering height="32" width="5"/>
 </widget>

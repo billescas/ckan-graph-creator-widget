@@ -14,5 +14,6 @@
     "white": true,
     "globals": {
         "URL": false
-    }
+    },
+    "devel": true
 }

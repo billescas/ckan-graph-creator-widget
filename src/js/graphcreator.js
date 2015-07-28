@@ -137,9 +137,9 @@ window.Widget = (function () {
             preferences.graph_series = get_general_series.call(this);
         }
 
-        for (var pref in preferences){//Transform the non text preferences in JSON text
+        for (var pref in preferences) {//Transform the non text preferences in JSON text
             if (!(typeof preferences[pref] === 'string' ||  preferences[pref] instanceof String)) {
-                preferences[pref] = JSON.stringify(prefs[pref]);
+                preferences[pref] = JSON.stringify(preferences[pref]);
             }
 
         }
@@ -162,19 +162,18 @@ window.Widget = (function () {
                 MashupPlatform.http.makeRequest(url, {
                     method: 'POST',
                     onSuccess: function () {
-                        //TODO show message
-                        //console.log("Success sending url to CKAN server");
+                        console.log("Success sending url to CKAN server");
                         var origin = document.location.origin;
                         window.frameElement.parentNode.ownerDocument.location.href = origin + "/" + workspace.owner + "/" + workspace.name;
                     },
                     onFailure: function () {
-                        //console.log("Failed to POST url to CKAN server");
+                        console.log("Failed to POST url to CKAN server");
                     }
                 });
             },
 
             onFailure: function () {
-                //console.log("Could not create the workspace");
+                console.log("Could not create the workspace");
             }
         });
     };
