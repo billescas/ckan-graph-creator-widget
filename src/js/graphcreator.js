@@ -112,12 +112,88 @@ window.Widget = (function () {
         container.appendChild(this.id_bubble_select);
     };
 
+    var getURLParameter = function getURLParameter(name, url) {
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(url) || [, ""])[1].replace(/\+/g, '%20')) || null;
+    };
+
+    var createWorkspace = function createWorkspace() {
+
+        var preferences = {
+            graph_type: this.current_graph_type,
+            graph_fields: {
+                group_column: this.group_axis_select.getValue(),
+            }
+        };
+
+        if (preferences.graph_type === 'bubblechart') {
+            preferences.graph_fields.axisx_field = this.axisx_select.getValue();
+            preferences.graph_fields.axisy_field = this.axisy_select.getValue();
+            preferences.graph_fields.axisz_field = this.axisz_select.getValue();
+            preferences.graph_fields.series_field = this.series_field_select.getValue();
+            preferences.graph_fields.id_bubble = this.id_bubble_select.getValue();
+            preferences.graph_series = get_bubble_series.call(this);
+
+        }else {
+            preferences.graph_series = get_general_series.call(this);
+        }
+
+        for (var pref in preferences){//Transform the non text preferences in JSON text
+            if (!(typeof preferences[pref] === 'string' ||  preferences[pref] instanceof String)) {
+                preferences[pref] = JSON.stringify(prefs[pref]);
+            }
+
+        }
+
+        MashupPlatform.mashup.createWorkspace({
+            name: 'CKAN Wirecloud View',
+            mashup: 'CoNWeT/ckan-wirecloud-view/1.0',
+            preferences: preferences,
+            onSuccess: function (workspace) {
+                //Go to new created workspace
+                var mashupUrl = window.frameElement.parentNode.ownerDocument.URL;
+
+                //Extract the resourceid and the view_id parameter from the url
+                var view_id = getURLParameter('viewid', mashupUrl);
+                var resource = getURLParameter('resourceid', mashupUrl);
+
+                var url = MashupPlatform.prefs.get('ckan_server') + "/wirecloud_view/resource/" + resource +
+                 "/view/" + view_id + "/workspace/" + workspace.owner + "/" + workspace.name + "?embedded=true";
+
+                MashupPlatform.http.makeRequest(url, {
+                    method: 'POST',
+                    onSuccess: function () {
+                        //TODO show message
+                        //console.log("Success sending url to CKAN server");
+                        var origin = document.location.origin;
+                        window.frameElement.parentNode.ownerDocument.location.href = origin + "/" + workspace.owner + "/" + workspace.name;
+                    },
+                    onFailure: function () {
+                        //console.log("Failed to POST url to CKAN server");
+                    }
+                });
+            },
+
+            onFailure: function () {
+                //console.log("Could not create the workspace");
+            }
+        });
+    };
+
+
     Widget.prototype.init = function init() {
         this.layout = new StyledElements.StyledNotebook({'class': 'se-notebook-crumbs'});
         this.layout.insertInto(document.body);
 
         var chart_tab = this.layout.createTab({name: "1. Chart", closable: false});
         var data_tab = this.layout.createTab({name: "2. Data", closable: false});
+        var mashup_tab = this.layout.createTab({name: "3. Mashup", closable: false});
+
+        var createButton = new StyledElements.StyledButton({text: 'Create mashup', class: 'btn-primary'});
+        createButton.insertInto(mashup_tab);
+
+        createButton.addEventListener("click", function () {
+            createWorkspace.call(this);
+        }.bind(this));
 
         // create the data selection tab
         // The graph selection tab depends on the data selection tab, so it must be build first
