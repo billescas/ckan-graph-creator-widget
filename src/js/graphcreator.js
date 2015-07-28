@@ -157,14 +157,16 @@ window.Widget = (function () {
                 var resource = getURLParameter('resourceid', mashupUrl);
 
                 var url = MashupPlatform.prefs.get('ckan_server') + "/wirecloud_view/resource/" + resource +
-                 "/view/" + view_id + "/workspace/" + workspace.owner + "/" + workspace.name + "?embedded=true";
+                 "/view/" + view_id + "/workspace/" + workspace.owner + "/" + workspace.name;
 
                 MashupPlatform.http.makeRequest(url, {
                     method: 'POST',
                     onSuccess: function () {
                         console.log("Success sending url to CKAN server");
                         var origin = document.location.origin;
-                        window.frameElement.parentNode.ownerDocument.location.href = origin + "/" + workspace.owner + "/" + workspace.name;
+
+                        window.frameElement.parentNode.ownerDocument.location.href =
+                        origin + "/" + workspace.owner +"/" + workspace.name  + "?embedded=true";
                     },
                     onFailure: function () {
                         console.log("Failed to POST url to CKAN server");
