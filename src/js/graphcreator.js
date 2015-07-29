@@ -116,13 +116,38 @@ window.Widget = (function () {
         return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(url) || [, ""])[1].replace(/\+/g, '%20')) || null;
     };
 
+    var showMsg = function showMsg(msg, type, callback) {
+        var alertDiv = document.getElementById("alert");
+
+        if (type.toLowerCase() == "warning") {
+            alertDiv.innerHTML = "<strong>Warning: </strong>" + msg;
+            alertDiv.className += " alert-warning";
+        }else if (type.toLowerCase() == "success") {
+            alertDiv.innerHTML = "";
+            alertDiv.appendChild(document.createTextNode(msg));
+            alertDiv.className += " alert-success";
+        }
+
+        setTimeout(function () {
+            alertDiv.className = "alert";
+            if (callback) {
+                callback.call(this);
+            }
+        }, 2000);
+    };
+
     var createWorkspace = function createWorkspace() {
+
+        var mashupUrl = window.frameElement.parentNode.ownerDocument.URL;
+        var resource = getURLParameter('resourceid', mashupUrl);
 
         var preferences = {
             graph_type: this.current_graph_type,
             graph_fields: {
                 group_column: this.group_axis_select.getValue(),
-            }
+            },
+            graph_series: [],
+            resource: resource
         };
 
         if (preferences.graph_type === 'bubblechart') {
@@ -137,25 +162,31 @@ window.Widget = (function () {
             preferences.graph_series = get_general_series.call(this);
         }
 
-        for (var pref in preferences) {//Transform the non text preferences in JSON text
-            if (!(typeof preferences[pref] === 'string' ||  preferences[pref] instanceof String)) {
-                preferences[pref] = JSON.stringify(preferences[pref]);
-            }
-
+        //We check that there are no fields unfinished
+        if (preferences.graph_series.length === 0) {
+            showMsg.call(this, "Can not create dashboard, a required field is empty.", "warning");
+            return;
         }
+
+        for (var field in preferences.graph_fields) {
+            if (preferences.graph_fields[field] == null) {
+                showMsg.call(this, "Can not create dashboard, a required field is empty.", "warning");
+                return;
+            }
+        }
+
+        //Convert the preferences that are not text to JSON
+        preferences.graph_series = JSON.stringify(preferences.graph_series);
+        preferences.graph_fields = JSON.stringify(preferences.graph_fields);
 
         MashupPlatform.mashup.createWorkspace({
             name: 'CKAN Wirecloud View',
             mashup: 'CoNWeT/ckan-wirecloud-view/1.0',
             preferences: preferences,
             onSuccess: function (workspace) {
-                //Go to new created workspace
-                var mashupUrl = window.frameElement.parentNode.ownerDocument.URL;
 
-                //Extract the resourceid and the view_id parameter from the url
+                //Extract the the view_id parameter from the url
                 var view_id = getURLParameter('viewid', mashupUrl);
-                var resource = getURLParameter('resourceid', mashupUrl);
-
                 var url = MashupPlatform.prefs.get('ckan_server') + "/wirecloud_view/resource/" + resource +
                  "/view/" + view_id + "/workspace/" + workspace.owner + "/" + workspace.name;
 
@@ -165,8 +196,11 @@ window.Widget = (function () {
                         console.log("Success sending url to CKAN server");
                         var origin = document.location.origin;
 
-                        window.frameElement.parentNode.ownerDocument.location.href =
-                        origin + "/" + workspace.owner +"/" + workspace.name  + "?embedded=true";
+                        //Go to new created workspace
+                        showMsg.call(this, "Dashboard created successfully, redirecting...", "success", function () {
+                            window.frameElement.parentNode.ownerDocument.location.href =
+                            origin + "/" + workspace.owner + "/" + workspace.name  + "?mode=embedded";
+                        });
                     },
                     onFailure: function () {
                         console.log("Failed to POST url to CKAN server");

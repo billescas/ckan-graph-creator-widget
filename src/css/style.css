@@ -43,3 +43,23 @@
   text-align: center;
 }
 
+.alert{
+  opacity: 0;
+  position: absolute;
+  z-index: -100;
+  transition: 0.5s;
+  max-width: 300px;
+  max-height: 70px;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  bottom: 0;
+  text-align: center;
+}
+
+.alert-warning, .alert-success{
+  opacity: 1;
+  transition: 0.5s;
+  z-index: 100;
+}
