@@ -226,7 +226,7 @@ window.Widget = (function () {
         var mashup_panel = document.createElement('div');
         mashup_panel.className = "mashup_panel";
         var temp_p = document.createElement('p');
-        temp_p.appendChild(document.createTextNode("If you are finished you can create a new dashboard."));
+        temp_p.appendChild(document.createTextNode("If you have finished, you can create a new dashboard now."));
         mashup_panel.appendChild(temp_p);
 
         var createButton = new StyledElements.StyledButton({text: 'Create dashboard', class: 'btn-primary'});
