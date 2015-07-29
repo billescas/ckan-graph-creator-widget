@@ -43,6 +43,14 @@
   text-align: center;
 }
 
+.mashup_panel p{
+  margin-bottom: 15px;
+}
+
+.mashup_panel div{
+  margin-bottom: 10px;
+}
+
 .alert{
   opacity: 0;
   position: absolute;
@@ -63,3 +71,8 @@
   transition: 0.5s;
   z-index: 100;
 }
+
+.se-text-field{
+  width: 13em;
+}
+
