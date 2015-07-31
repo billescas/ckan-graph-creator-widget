@@ -22,5 +22,5 @@
      <feature name="DashboardManagement"/>
   </requirements>
   <contents src="index.html" cacheable="false" useplatformstyle="true"/>
-  <rendering height="32" width="5"/>
+  <rendering height="32" width="6"/>
 </widget>

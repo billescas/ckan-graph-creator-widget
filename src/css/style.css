@@ -1,25 +1,54 @@
 .container-basicgraphs {
-  display: block;
+  display: inline-block;
   padding: 10px 5px 10px 5px;
-  border-bottom: 1px dashed #002B67;
+  position: absolute;
+  top: 0;
+  border-bottom: 1px solid rgb(200, 200, 200);
+  left: 0;
+  background: rgb(245, 245, 245);
+  text-align: center;
+  width: 100%;
+  padding: 15px 0px 10px 0px;
 }
 
 .graph-button {
   position: relative;
   display: inline-block;
-  border: 3px solid #eee;
+  border: 2px solid rgb(65, 140, 200);
   margin: 4px 4px 4px 4px;
   height: 48px;
-  width: 70px;
+  background: white;
+  width: 60px;
+  border-radius: 4px;
 }
 
 .graph-button.active {
-  border: 3px solid #002B67;
+  box-shadow: 0px 0px 10px orange;
+  border: 2px solid orange;
+  transition: 0.2s;
+}
+
+.graph-button:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 10px rgb(65, 140, 200);
+  transition: 0.3s;
+}
+
+.graph-button.active:hover {
+  box-shadow: 0px 0px 20px orange;
+  border: 2px solid orange;
 }
 
 .container-subgraphs {
-  display: block;
+  display: inline-block;
+  position: absolute;
   padding: 10px 5px 10px 5px;
+  left: 0;
+  top: 90px;
+  text-align: center;
+  width: 100%;
+  padding: 15px 0px 10px 0px;
+  transition: 0.2s;
 }
 
 .container-subgraphs > div {
