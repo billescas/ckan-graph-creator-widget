@@ -36,17 +36,17 @@
             label: 'Linear Graph',
             subtypes: [
                 {id: 'linechart', label: "Line Chart"},
-                {id: 'linechart-smooth', label: "Smoothed Lines Chart", title: "Just works on Google Chart"},
-                {id: 'combochart', label: "Combo Chart", title: "Just works on Google Chart"},
-                {id: 'radarchart', label: "Radar Chart", title: "Just works on Flotr2 Graph"}
+                {id: 'linechart-smooth', label: "Smoothed Lines Chart", title: "Only works on Google Chart"},
+                {id: 'combochart', label: "Combo Chart", title: "Only works on Google Chart"},
+                {id: 'radarchart', label: "Radar Chart", title: "Only works on Flotr2 Graph"}
             ]
         },
         areagraph: {
             label: 'Area Graph',
             subtypes: [
                 {id: 'areachart', label: "Area Chart"},
-                {id: 'areachart-stacked', label: "Area Chart Stacked", title: "Just works on Google Chart"},
-                {id: 'steppedareachart', label: "Stepped Area Chart", title: "Just works on Google Chart"}
+                {id: 'areachart-stacked', label: "Area Chart Stacked", title: "Only works on Google Chart"},
+                {id: 'steppedareachart', label: "Stepped Area Chart", title: "Only works on Google Chart"}
             ]
         },
         columngraph: {
@@ -54,7 +54,7 @@
             subtypes: [
                 {id: 'columnchart', label: "Column Chart"},
                 {id: 'columnchart-stacked', label: "Column Chart Stacked"},
-                {id: 'histogram', label: "Histogram", title: "Just works on Google Chart"}
+                {id: 'histogram', label: "Histogram", title: "Only works on Google Chart"}
             ]
         },
         bargraph: {
@@ -67,7 +67,7 @@
         scattergraph: {
             label: 'Scatter Graph',
             subtypes: [
-                {id: 'scatterchart', label: "Scatter Chart", title: "Just works on Google Chart"},
+                {id: 'scatterchart', label: "Scatter Chart", title: "Only works on Google Chart"},
                 {id: 'bubblechart', label: "Bubble Chart"}
             ]
         },
@@ -75,15 +75,15 @@
             label: 'Pie Graph',
             subtypes: [
                 {id: 'piechart', label: "Pie Chart"},
-                {id: 'piechart-3d', label: "Pie Chart 3D", title: "Just works on Google Chart"},
-                {id: 'donutchart', label: "Donut Chart", title: "Just works on Google Chart"}
+                {id: 'piechart-3d', label: "Pie Chart 3D", title: "Only works on Google Chart"},
+                {id: 'donutchart', label: "Donut Chart", title: "Only works on Google Chart"}
             ]
         },
         geograph: {
             label: 'Geo Graph',
             subtypes: [
-                {id: 'geochart', label: "Geo Chart", title: "Just works on Google Chart"},
-                {id: 'geochart-markers', label: "Geo Chart Markers", title: "Just works on Google Chart"}
+                {id: 'geochart', label: "Geo Chart", title: "Only works on Google Chart"},
+                {id: 'geochart-markers', label: "Geo Chart Markers", title: "Only works on Google Chart"}
             ]
         }
     };
